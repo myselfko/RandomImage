@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: black;
+        }
+
+        div {
+            width: 50%;
+            height: 50%;
+            float: left;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        var divs = {
+            '#one': 500,
+            '#two': 600,
+            '#three': 700,
+            '#four': 800
+        };
+
+        function showImage() {
+            $.each(divs, (id, fadeTime) => {
+                $.get('/image', data => {
+                    $(id).fadeOut(fadeTime, () => {
+                        $(id).css('background-image', 'url(' + data + ')');
+                    });
+                    $(id).fadeIn(fadeTime);
+                });
+            });
+        }
+
+        $(() => {
+            showImage();
+
+            setInterval(() => {
+                showImage();
+            }, 5000);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="one"></div>
+    <div id="two"></div>
+    <div id="three"></div>
+    <div id="four"></div>
+</body>
+
+</html>
